@@ -1,16 +1,16 @@
+// src/services/api.ts (o donde lo tengas)
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000';
+// 1) Toma la base URL desde variables (Netlify: VITE_API_URL=https://agrocoop-backend.onrender.com)
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL?.replace(/\/+$/, '') || 'http://localhost:8000';
 
-// Configurar axios con las credenciales y CSRF
+// 2) Cliente axios con credenciales (cookies)
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });
-
 // Interceptor para agregar CSRF token
 api.interceptors.request.use(
   (config) => {
